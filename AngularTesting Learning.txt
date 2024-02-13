@@ -1,0 +1,98 @@
+toBe()
+toEqual()
+toContain()
+not.toBe()
+toBeTruthy()
+
+------------------------------------------------
+//arrange 
+let obj = new Conponent();
+//ACt
+let isResverd = obj.resvered();
+//Assert
+expect(isResverd).toBeTruthy();
+
+
+--------------------------------------------------------
+
+TestBed is one of the main utilities for unit testing components, directives, services in Angular & It is Angular specific.
+The  TestBed creates a dynamically-constructed Angular test module that emulates an Angular @NgModule.
+It also provides methods for creating components and services for unit test cases.
+Component fixture is reference to the instance of component class & reference.
+-----------------------------------------------------------------------------------
+
+const fixture = TestBed.createComponent(AppComponent);
+const app = fixture.debugElement.componentInstance;
+expect(app).toBeTruthy();
+expect(app.title).toEqual('Bharat');
+
+----------------------------------------------------------------------------------
+Jasmine Spies help  us to mock the execution of the method /  function.
+It’s a easy way to check a method was called or not, without leaving Subject Under Test(SUT).
+We can chain the spyOn method to get dummy return value using .and.returnvalue()
+spyOn can call the original function using .and.callThrough()
+------------------------------------------------------------------------------
+Debugelement is an interface created to work safely across different platforms.
+Debugelement  creates DebugElement tree that wraps the native elements for platforms, instead of HTML element tree.
+The DebugElement associated with the root element of the component.
+Debugelement  comes with methods and properties that are useful for testing.
+nativeElement property returns us platform specific object.
+triggerEventHandler will help us to execute the DOM events
+-------------------------------------------------------------------------------------
+Jasmine Done(In video at - 10:30) - 
+1. Jasmine has a built-in way to handle async code and that’s passed to beforeEach(), afterEach() and it() test methods and is called done() callback.
+2. done() callback are responsible for chaining promises, handling errors, and calling done() at the appropriate moments.
+3. The test specs are completed after the invocation of done() callback and this is its primary feature.
+
+Async..WhenStable (In video at - 14:30) - 
+1. Wraps a test function in an asynchronous test zone.
+2. Whenstable  helps us to test promises by allowing us to wait until all the   promises have completed.
+3. The fixture.whenStable() returns a promise that resolves when the JavaScript engines task queue becomes empty.
+--------------------------------------------------------------------------------
+1. fakeAsync function executes the test code in special fakeAsync test Zone.
+2. tick() utility blocks the execution of all the microtasks  and simulates    passage of time until all the asynchronous tasks are executed.
+3. fakeAsync and tick - tests the asynchronous code in synchronous way.
+Note:- we can pass parameter inside tick(50), that represent milisecond.
+----------------------------------------------------------------------------
+ Testing Dependency Injection | Unit Test | Angular : 
+ 
+Using TestBed
+Using inject function
+By Overriding Component Providers and Using injector of the component-under-test.
+--------------------------------------------------------------------------------------
+createSpy - It is very useful when there is no function or lag in time for calling the original function.
+createSpyObj- It creates a mock object with multiple spies.
+SpyOn - https://youtu.be/3xAq_tHuzd0
+---------------------------------------------------------------------------------------
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ difference between mock, fake, spy and stubs in detail.
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 
+----------------------------------------------------------------------------------------------
+HttpClient testing easy to test and it can be done by using 
+1. HttpClientTestingModule
+	It is Used for testing HTTP method using HttpClient.
+	It also injects HttpTestingController, that allows us to mock and flush the request.
+
+2. HttpTestingController
+	Its a Controller injected into tests, that allows for mocking and flushing of requests.
+	It has four following methods:
+		> expectOne()- expects single request made matching the given url and returns a mock data.
+		> expectNone() - expects no request has been made for the given URL.
+		> match() - without any expectation, match the request given as the parameter
+		> verify() - Verify that no unmatched requests are outstanding.
+ 
+3. TestRequest
+	A mock requests that was received and is ready answered.
+	It has following methods:
+		>flushed : -Resolves request by returing the body and additional HTTP information.
+		>Error: Resolve the request by returning an ErrorEvent
+		>Event:returns an arbitrary HttpEvent.
+	It has following properties:
+		> cancelled: whether the request is cancelled or not.
+		> Request : type of HttpRequest Object
+
+---------------------------------------------------------------------------------------------- 
+ 
+

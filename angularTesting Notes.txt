@@ -1,0 +1,72 @@
+Component is more than just its class. A component intract with the DOM and with other components.
+
+We know that a Angular component is a combination of an HTML template and a TypeScript class. The component tryly is the template and the class working together.
+
+To adequately test  component, you should test that both template and typescript work together as intended.
+
+The class-only tests can tell you about class behavior. They can not tell you if the componennt is going to render properly, respond to user input and gestures, or integrate with its parent and child components.
+
+These tests require creating the component's host element in the browser DOM, as Angular does, and investigating the component class's interaction with the DOM as described by its temmplate.
+
+In may cases testing the componnet class alone , without DOM involvement, can validate much of the component's behaviour in a straighforward, more obvious way.
+
+The Angular TestBed(ATB) is a higher level Angular Only testing framework that allows us to easily test behaviors that depend on the Angular Framework.
+
+Trying to test whether changes in the state of our application trigger changes in the view without the Angular Test Bed is complicated. However with the ATB its much simpler.
+
+TestBed.configureTestingModule({
+declarations: [BannerComponnet]
+});
+const fixture = TestBed createComponent(BannerComponent);
+
+const component = fixture.componentIntance;
+
+expect(component).tobeDefined();
+
+Component fixture hs the component instance and the native element to access the component template
+
+The value of ComponentFixture.nativeElement has the any type. Angular can't know at compiletime what kind of HTML element the nativeElement is or if it event is an HTML element. 
+
+The application might be running on a non-browser platform, uch as the server or a Web Worker, where the element might have a diminised API or not exist at all.
+
+The tests we do are designed to run in a browser so a nativeElement value will always be an HTMLElement or one of its derived classes.
+
+We understood that native element is the HTML element, so we can use the querySelector to traverse the HTML element tree.
+
+it("should have <p> with 'banner works!'",()=>{
+const bannerElement:HTMLElement = fixture.nativeElement;
+const p = bannerElement.querySelector('p');
+expect(p.textContent).toEqual('Banner Works!');
+});
+
+The Angular fixture provides the componnet's elemnt directly trough the fixture.nativeElement. But there is also another convenient method to access the HTML Element.
+
+The method is 
+
+fixture.debugElement.nativeElement
+
+const bannerDe:DebugElement = fixture.debugElement;
+const bannerEl:HTMLElement = bannerDe.nativeElement;
+
+The properties of the nativeElement depend upon the runtime environment. You could be running these tests on a non-browser platform that doesn't have a DOM or whose DOM-emulation does't support the full HTMLElement API.
+
+Instead of creating an HTML element tree, Angular creates a DebugElement tree that wraps the native elements for the runtime plateform.
+
+The nativeElement property unwraps the DegugElement and returns the plateform-specific element object.
+
+
+it("should find the <p> with fixture.debugElement.nativeElement",()=>{
+ const bannerDe: DebugElement = fixture.debugElement;
+ const bannerEl: HTMLElement = bannerDE.nativeElement;
+ const p = bannerEl.querySelector('p');
+ expect(p.textContent).toEqual('banner works!');
+});
+
+The DebugElement offer query methods that work for all supported platforms. These query methods take a predicate function that returns true whrn a node in the DebugElement tree matches the selection criteria.
+
+it('should find the <p> with fixture.debugElement.query(By.css)', ()=>{
+const bannerDe:DebugElement = fixture.debugElement;
+const paragraphDe = bannerDe.query(By.css('p'));
+const p: HTMLElement = paragraphDe.nativeElement;
+expect(p.textContent).toEqual('banner works!');
+});
